@@ -1,9 +1,11 @@
 import { ApolloServer } from 'apollo-server';
+import { ApolloServerBase } from 'apollo-server';
 import { createTestClient } from 'apollo-server-testing';
 import { typeDefs } from '../schema';
 import { resolvers } from '../resolvers';
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server: ApolloServerBase = new ApolloServer({ typeDefs, resolvers });
+
 
 describe('verifyUser', () => {
   it('should verify a user with correct inputs', async () => {
@@ -40,7 +42,7 @@ describe('verifyUser', () => {
           verifyUser(
             user_account_number: "1234567890",
             user_bank_code: "056",
-            user_account_name: "John Doe"
+            user_account_name: "Adekunle Fasakin"
           ) {
             id
             name
@@ -65,13 +67,13 @@ describe('verifyUser', () => {
         PaystackService: {
           resolveAccountNumber: async () => ({
             status: true,
-            data: { account_name: 'John Doe' },
+            data: { account_name: 'Adekunle  Fasakin' },
           }),
         },
         UserRepository: {
           getUserByBankAndAccount: async () => ({
             id: '123',
-            name: 'John Doe',
+            name: 'Adekunle Fasakin',
             is_verified: false,
           }),
           updateUser: async () => ({
@@ -91,7 +93,7 @@ describe('verifyUser', () => {
           verifyUser(
             user_account_number: "1234567890",
             user_bank_code: "056",
-            user_account_name: "Jane Doe"
+            user_account_name: "Opeyemi Fasakin"
           ) {
             id
             name
@@ -103,7 +105,7 @@ describe('verifyUser', () => {
 
     expect(res.data.verifyUser).toEqual({
       id: '123',
-      name: 'John Doe',
+      name: 'Adekunle Fasakin',
       is_verified: false,
     });
   });

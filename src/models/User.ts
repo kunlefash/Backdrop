@@ -14,10 +14,11 @@ export async function verifyUser(
   accountName: string,
   paystackApi: PaystackApi
 ): Promise<boolean> {
-  const { accountName: paystackAccountName } = await paystackApi.getAccountName(
+  const paystackAccountName = await paystackApi.getAccountName(
     user.accountNumber,
     user.bankCode
-  );
+);
+
 
   const distance = computeLevenshteinDistance(
     accountName.toLowerCase(),

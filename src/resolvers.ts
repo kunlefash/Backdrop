@@ -1,7 +1,7 @@
-import { User } from "./models/User";
 import { PaystackService } from "./services/paystack";
 import { computeLevenshteinDistance } from "./utils/levenshtein";
 import { typeDefs } from "./schema";
+import { User } from "./models/User"
 require("dotenv").config();
 
 const paystack = new PaystackService(process.env.PAYSTACK_API_KEY);
@@ -12,18 +12,18 @@ export const resolvers = {
       bankCode,
       accountNumber,
     }: {
-      bankCode: String;
-      accountNumber: String;
+      bankCode: string;
+      accountNumber: string;
     }) => {
       const user = await User.findOne({ bankCode, accountNumber });
       if (user && user.accountName) {
         return user.accountName;
       }
-      const { accountName } = await paystack.resolveAccount(
+      const resolvedAccount = await paystack.resolveAccount(
         accountNumber,
         bankCode
       );
-      return accountName;
+      return resolvedAccount.accountName;
     },
   },
   Mutation: {
@@ -32,9 +32,9 @@ export const resolvers = {
       bankCode,
       accountName,
     }: {
-      accountNumber: String;
-      bankCode: String;
-      accountName: String;
+      accountNumber: string;
+      bankCode: string;
+      accountName: string;
     }) => {
       const { accountName: resolvedAccountName } =
         await paystack.resolveAccount(accountNumber, bankCode);
