@@ -3,6 +3,8 @@ import { createTestClient } from 'apollo-server-testing';
 import { typeDefs } from '../schema';
 import { resolvers } from '../resolvers';
 
+const server = new ApolloServer({ typeDefs, resolvers });
+
 describe('verifyUser', () => {
   it('should verify a user with correct inputs', async () => {
     const server = new ApolloServer({
@@ -106,3 +108,4 @@ describe('verifyUser', () => {
     });
   });
 });
+

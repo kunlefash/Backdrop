@@ -1,4 +1,5 @@
 import { computeLevenshteinDistance } from "../utils/levenshtein";
+import { PaystackApi } from "../types";
 
 export interface User {
   id: number;
